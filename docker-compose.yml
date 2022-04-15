@@ -1,0 +1,34 @@
+version: "2"
+services:
+  mysql:
+    restart: always
+    container_name: mysql-dev
+    image: mysql:8.0
+    networks:
+      dev_net:
+        ipv4_address: 172.16.239.10
+    env_file:
+      - ./env/mysql.env
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  redis:
+    restart: always
+    container_name: redis-dev
+    image: redis:6.0.16
+    networks:
+      dev_net:
+        ipv4_address: 172.16.239.11
+    volumes:
+      - ./data/redis:/data
+      - ./config/redis:/usr/local/etc/redis
+    ports:
+      - "6379:6379"
+networks:
+  dev_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.239.0/24
