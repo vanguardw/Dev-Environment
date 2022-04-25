@@ -11,6 +11,7 @@ services:
       - ./env/mysql.env
     volumes:
       - ./data/mysql:/var/lib/mysql
+      - ./config/mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
     ports:
       - "3306:3306"
   redis:
